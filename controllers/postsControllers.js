@@ -14,14 +14,22 @@ db.query (sql,(err, results) => {
 //SHOW: restituisce i detagli di un singolo post
 exports.show = (req, res) => {
     const id = parseInt(req.params.id)
-    const post = posts.find (p => p.id === id)
 
-    if (!post) {
-    return res.status(404).json({ message: 'Post non trovato' });
+    const sql= 'SELECT * FROM post WHERE id=?'
+    db.query (sql, [id], (err, result) => {
+
+      if (err){
+        return res. status (500).json ({error: 'errore durante il recupero del post: ' +err  });
+      }
+
+    if (results.length === 0) {
+      return res. status (404).json ({message: 'post non trovato'})
     
-  }
-  res.json(post)
-
+    
+    }
+    res.json (results [0]) 
+    })
+  
 }
 
 //STORE: crea un nuovo post
