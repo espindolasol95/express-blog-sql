@@ -1,20 +1,15 @@
-// MILESTONE 1
+const db = require('../data/db');
 
-
-//importo l'array dalla cartella data
-let posts = require('../data/postsData.js')  //verrà usato nella millestone 2 
 
 //INDEX: restituisce la lista di tutti i post
 exports.index = (req, res) => {
-const tag = req.query.tag
-//definisco l'array
-let filteredPost = posts
-//controllo il valore title se è diverso a undefined esseguo il filtraggio
-if (tag){
+const sql= 'SELECT *FROM post'
 
-  filteredPost = posts.filter(item => item.tags.includes(tag))
-}
-    res.json(filteredPost);
+db.query (sql,(err, results) => {
+  if(err) return res. status(500).json ({error: 'errore durante l esecuzione della query:' +err }) 
+  
+    res.json(results);
+  })
 }
 //SHOW: restituisce i detagli di un singolo post
 exports.show = (req, res) => {
