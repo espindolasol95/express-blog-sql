@@ -66,16 +66,20 @@ exports.modify = (req, res) => {
 exports.destroy = (req, res) => {
   const id = parseInt(req.params.id)
 
-  const index = posts.findIndex (p => p.id === id)
-   if (index !== -1) {
-    posts.splice(index, 1);
+  const sql = 'DELETE FROM posts WHERE id=?'
+  db.query (sql, [id], (err, result) => {
+     if (err) {
+      return res.status(500).json({ error: 'Errore durante l\'eliminazione del post: ' + err });
+    }
 
-    console.log(posts);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Post non trovato' });
+    }
 
-    res.status(204).send();
-  } else {
-    res.status(404).json({ message: 'Post non trovato' });
-  }
+    return res.status(204).send();
+    
+  
+
+})
 
 }
-
