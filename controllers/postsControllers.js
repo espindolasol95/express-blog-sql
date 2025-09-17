@@ -3,10 +3,10 @@ const db = require('../data/db');
 
 //INDEX: restituisce la lista di tutti i post
 exports.index = (req, res) => {
-const sql= 'SELECT *FROM post'
+const sql= 'SELECT *FROM posts'
 
 db.query (sql,(err, results) => {
-  if(err) return res. status(500).json ({error: 'errore durante l esecuzione della query:' +err }) 
+  if(err) return res. status(500).json ({error: 'errore durante l esecuzione della query:' +err.message }) 
   
     res.json(results);
   })
