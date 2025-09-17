@@ -1,3 +1,4 @@
+
 //importo express
 const express = require('express');
 
@@ -14,12 +15,12 @@ app.use(express.json());
 app.use(express.static ('public'));
 
 // Importo i middleware personalizzati
-const errorHandler = require('./middlewares/errorHandler')
-const notFound = require('./middlewares/notFound')
+const errorHandler = require('./middleware/errorHandler')
+const notFound = require('./middleware/notFound')
 
 //Importi il router delle rotte /posts
 const postRouters = require('./routers/postsRoutes.js')
-
+ require('./data/db'); 
 //utilizo il file routers per definire le ruote dei posts
 app.use('/posts', postRouters)
 
